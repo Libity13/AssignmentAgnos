@@ -1,5 +1,5 @@
-import { PatientForm } from '@/components/patient/PatientForm'
+import { PatientFormClient } from '@/components/patient/PatientFormClient'
 
 export default function PatientPage() {
-  return <PatientForm />
+  return <PatientFormClient />
 }
