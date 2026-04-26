@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Patient form — realtime staff monitor
 
-## Getting Started
+แอป Next.js สำหรับคนไข้กรอกฟอร์มและเจ้าหน้าที่ดูข้อมูลแบบเรียลไทม์ผ่าน **Supabase Realtime (Broadcast)**
 
-First, run the development server:
+## สิ่งที่ต้องมีก่อน
+
+- **Node.js** เวอร์ชันแนะนำ 20 LTS ขึ้นไป (ให้สอดคล้องกับ Next.js 16)
+- บัญชี **[Supabase](https://supabase.com)** และโปรเจกต์ที่เปิดใช้ **Realtime** (ใช้สำหรับ broadcast ระหว่างแท็บ)
+
+## ติดตั้ง
+
+```bash
+git clone <repository-url>
+cd <โฟลเดอร์โปรเจกต์>
+npm install
+```
+
+## ตั้งค่าตัวแปรสภาพแวดล้อม
+
+สร้างไฟล์ `.env.local` ที่รากโปรเจกต์:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://xxxxxxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
+
+ค่าทั้งสองดูได้ที่ Supabase Dashboard → **Project Settings** → **APIKeys**
+
+> โปรเจกต์นี้ใช้เฉพาะคีย์ฝั่ง client (`NEXT_PUBLIC_*`) สำหรับ Realtime channel — ไม่ต้องมี service role key ใน repo นี้
+
+## รันในโหมดพัฒนา
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+เปิดเบราว์เซอร์ที่ [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| เส้นทาง   | ใช้ทำอะไร        |
+|-----------|------------------|
+| `/`       | เลือกคนไข้ / เจ้าหน้าที่ |
+| `/patient`| ฟอร์มคนไข้       |
+| `/staff`  | มอนิเตอร์เจ้าหน้าที่ |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+ทดสอบเรียลไทม์: เปิด `/patient` กับ `/staff` **คนละแท็บ** (หรือคนละหน้าต่าง) พร้อมกัน
 
-## Learn More
+## บิลด์และรันแบบ production (ท้องถิ่น)
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+npm start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy (เช่น Vercel)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. ผูก repo กับ Vercel (หรือแพลตฟอร์มที่รองรับ Next.js)
+2. ตั้ง **Environment Variables** ให้ตรงกับ `.env.local` (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`)
+3. Deploy แล้วเปิด URL ที่ได้ — หน้า `/patient` กับ `/staff` ใช้งานเหมือนในเครื่อง
 
-## Deploy on Vercel
+## สคริปต์อื่น
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run lint
+```
